@@ -1,61 +1,26 @@
-# Image generation with limited dataset (Pokemon)
+# Type-specified Pokemon Image Generation
 
 ## Overview
 
-Image generation with limited dataset, we use Pokemon dataset in practice.
+Course project for ECE 285 SP25 Deep Generative Models. We have fine-tuned Stable Diffusion 1.5 with a 2-stage LoRA fine-tuning strategy. In stage 1, we let model learn general Pokemon features. In stage 2, we let model learn a certain type's Pokemon features.
 
-## Motivation
+## Samples before and after stage 1
 
-The Pokemon franchise contains hundreds of uniquely designed characters with distinct visual styles that present an interesting challenge for generative models. Creating a specialized model for Pokemon generation would allow:
+| Vanilla SD 1.5                               | After 4 epochs fine-tuning       | After 8 epochs fine-tuning       |
+| -------------------------------------------- | -------------------------------- | -------------------------------- |
+| ![R4_Vanilla](figures/stage1/R4_Vanilla.png) | ![R4E4](figures/stage1/R4E4.png) | ![R4E8](figures/stage1/R4E8.png) |
 
-1. Generation of novel Pokemon designs that maintain stylistic consistency
 
-2. Exploration of controllable features (type, color scheme, evolution stages)
 
-3. Practical application of recent advances in diffusion models to a specific domain
+## Samples before and after stage 2
 
-## Related Work
+| Prompt           | Before stage 2 fine-tuning             | After 8 epochs fine-tuning             |
+| ---------------- | -------------------------------------- | -------------------------------------- |
+| A fish Pokemon   | ![fish0](figures/stage2/fish0.png)     | ![fish0](figures/stage2/fish8.png)     |
+| A flower Pokemon | ![flower0](figures/stage2/flower0.png) | ![flower8](figures/stage2/flower8.png) |
 
-We refer papers as follow:
+## Usage
 
-1. Diffusion Models: Introduced by Sohl-Dickstein et al. (2015), refined by Ho et al. (2020) with DDPM
+Both jupyter notebooks can run directly in Google Colab environment.
 
-2. Latent Diffusion Models: Developed by Rombach et al. (2022), which operate in compressed latent space
-
-3. Stable Diffusion: A popular implementation of LDM for text-to-image generation
-
-4. Domain-specific image generation: Similar projects have focused on anime characters, logos, and other specialized visual domains
-
-## Novelty
-
-Our project has following novelty:
-
-1. Domain specialization: Creating a model specifically optimized for Pokemon character generation
-
-2. Attribute conditioning: Allowing control over Pokemon type, abilities, or evolution stage
-
-3. Style consistency: Maintaining the distinct Pokemon aesthetic while generating novel designs
-
-4. Dataset curation: Creating a high-quality dataset of Pokemon images with appropriate metadata
-
-## Training Strategy
-
-**Stage 1 - Autoencoder Training**:
-
-- Train a VAE/autoencoder on Pokemon images
-- Objective: Reconstruct images accurately while compressing to latent space
-- Metrics: Reconstruction loss, perceptual similarity
-
-**Stage 2 - Diffusion Model Training**:
-
-- Train diffusion model in the latent space
-- Add noise gradually in forward process
-- Learn to denoise in reverse process
-- Incorporate conditioning (text embeddings or class labels)
-
-**Stage 3 - Fine-tuning**:
-
-- Fine-tune the model with specific conditioning
-- Balance between diversity and fidelity
-- Implement regularization to prevent overfitting on limited data
-
+We also provide trained lora weights of stage 1 in one folder. You may directly load them. 
